@@ -1,0 +1,6 @@
+inventory_id,ingredient_id,location_id,quantity_on_hand,reorder_point,max_stock_level,last_updated
+1,101,1,60,50,120,2026-03-20
+2,102,2,25,20,50,2026-03-21
+3,103,3,45,40,100,2026-03-21
+4,104,3,150,100,300,2026-03-22
+5,105,3,250,200,500,2026-03-22

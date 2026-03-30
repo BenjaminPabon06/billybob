@@ -1,0 +1,6 @@
+ingredient_id,ingredient_name,category,unit_of_measure,cost_per_unit,reorder_level
+101,Chicken Breast,meat,lbs,3.25,50
+102,Frying Oil,cooking_oil,gallons,8.50,20
+103,Potatoes,produce,lbs,1.20,40
+104,Cane's Sauce Mix,dry_goods,units,0.75,100
+105,Paper Cups,packaging,units,0.10,200

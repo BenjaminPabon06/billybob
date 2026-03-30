@@ -1,0 +1,4 @@
+location_id,location_name,storage_type,temperature_zone,is_active
+1,Walk-in Freezer,cold_storage,frozen,TRUE
+2,Refrigerator,cold_storage,chilled,TRUE
+3,Dry Storage Room,dry_storage,room_temp,TRUE

@@ -1,0 +1,4 @@
+supplier_id,supplier_name,contact_name,phone_number,lead_time_days,is_active
+201,Tyson Foods,John Miller,2105551234,3,TRUE
+202,Sysco,Maria Lopez,2105555678,2,TRUE
+203,US Foods,David Chen,2105559012,4,TRUE

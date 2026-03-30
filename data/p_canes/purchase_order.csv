@@ -1,0 +1,6 @@
+purchase_order_id,supplier_id,ingredient_id,quantity_ordered,order_date,estimated_delivery_date,total_cost,order_status
+1,201,101,100,2026-03-18,2026-03-21,325.00,Received
+2,202,102,30,2026-03-19,2026-03-21,255.00,Received
+3,202,103,80,2026-03-20,2026-03-22,96.00,Pending
+4,203,104,200,2026-03-21,2026-03-25,150.00,Pending
+5,203,105,500,2026-03-22,2026-03-26,50.00,Pending
