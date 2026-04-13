@@ -64,9 +64,8 @@
 --   - Create a new schema called "mightyfine".
 -- ============================================================================
 
--- YOUR CODE HERE
-
-
+DROP SCHEMA IF EXISTS mightyfine CASCADE;
+CREATE SCHEMA mightyfine;
 
 -- ============================================================================
 -- TASK 1.2: CREATE THE OWNERS TABLE (3 pts)
@@ -83,9 +82,14 @@
 -- HINT: Look at how hotdog.owners was created in the lesson.
 -- ============================================================================
 
--- YOUR CODE HERE
-
-
+CREATE TABLE mightyfine.owners (
+    owner_id SERIAL PRIMARY KEY,
+    first_name VARCHAR(50) NOT NULL,
+    last_name VARCHAR(50) NOT NULL,
+    email VARCHAR(100),
+    phone VARCHAR(20),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
 
 -- ============================================================================
 -- TASK 1.3: CREATE THE VENDORS TABLE (2 pts)
@@ -101,9 +105,15 @@
 --     created_at   — timestamp, default to CURRENT_TIMESTAMP
 -- ============================================================================
 
--- YOUR CODE HERE
-
-
+CREATE TABLE mightyfine.vendors (
+    vendor_id SERIAL PRIMARY KEY,
+    vendor_name VARCHAR(100) NOT NULL,
+    contact_name VARCHAR(100),
+    phone VARCHAR(20),
+    email VARCHAR(100),
+    address VARCHAR(200),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
 
 -- ============================================================================
 -- TASK 1.4: CREATE THE INGREDIENTS TABLE (3 pts)
@@ -117,9 +127,13 @@
 --     vendor_id       — integer, FOREIGN KEY referencing mightyfine.vendors
 -- ============================================================================
 
--- YOUR CODE HERE
-
-
+CREATE TABLE mightyfine.ingredients (
+    ingredient_id SERIAL PRIMARY KEY,
+    ingredient_name VARCHAR(100) NOT NULL,
+    unit VARCHAR(20) NOT NULL,
+    cost_per_unit NUMERIC(8,2) NOT NULL,
+    vendor_id INTEGER REFERENCES mightyfine.vendors(vendor_id)
+);
 
 -- ============================================================================
 -- TASK 1.5: CREATE THE INVENTORY TABLE (2 pts)
@@ -134,9 +148,14 @@
 --     updated_at      — timestamp, default to CURRENT_TIMESTAMP
 -- ============================================================================
 
--- YOUR CODE HERE
-
-
+CREATE TABLE mightyfine.inventory (
+    inventory_id SERIAL PRIMARY KEY,
+    ingredient_id INTEGER NOT NULL REFERENCES mightyfine.ingredients(ingredient_id),
+    quantity NUMERIC(10,2) NOT NULL DEFAULT 0,
+    reorder_level NUMERIC(10,2) NOT NULL DEFAULT 10,
+    last_restocked DATE,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
 
 -- ============================================================================
 -- TASK 1.6: CREATE THE MENU_ITEMS TABLE (2 pts)
@@ -150,9 +169,13 @@
 --     is_available  — boolean, default TRUE
 -- ============================================================================
 
--- YOUR CODE HERE
-
-
+CREATE TABLE mightyfine.menu_items (
+    menu_item_id SERIAL PRIMARY KEY,
+    item_name VARCHAR(100) NOT NULL,
+    description VARCHAR(255),
+    price NUMERIC(6,2) NOT NULL,
+    is_available BOOLEAN DEFAULT TRUE
+);
 
 -- ============================================================================
 -- TASK 1.7: CREATE THE MENU_ITEM_INGREDIENTS TABLE (3 pts)
@@ -171,9 +194,12 @@
 --   This many-to-many relationship requires a bridge table in the middle.
 -- ============================================================================
 
--- YOUR CODE HERE
-
-
+CREATE TABLE mightyfine.menu_item_ingredients (
+    menu_item_ingredient_id SERIAL PRIMARY KEY,
+    menu_item_id INTEGER NOT NULL REFERENCES mightyfine.menu_items(menu_item_id),
+    ingredient_id INTEGER NOT NULL REFERENCES mightyfine.ingredients(ingredient_id),
+    quantity_used NUMERIC(8,2) NOT NULL
+);
 
 -- ============================================================================
 -- TASK 1.8: CREATE THE SALES TABLE (1 pt)
@@ -187,9 +213,13 @@
 --     payment_type — text up to 20 characters, default 'cash'
 -- ============================================================================
 
--- YOUR CODE HERE
-
-
+CREATE TABLE mightyfine.sales (
+    sale_id SERIAL PRIMARY KEY,
+    sale_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    owner_id INTEGER REFERENCES mightyfine.owners(owner_id),
+    total_amount NUMERIC(8,2),
+    payment_type VARCHAR(20) DEFAULT 'cash'
+);
 
 -- ============================================================================
 -- TASK 1.9: CREATE THE SALE_ITEMS TABLE (2 pts)
@@ -203,9 +233,13 @@
 --     line_total    — numeric(8,2), NOT NULL
 -- ============================================================================
 
--- YOUR CODE HERE
-
-
+CREATE TABLE mightyfine.sale_items (
+    sale_item_id SERIAL PRIMARY KEY,
+    sale_id INTEGER NOT NULL REFERENCES mightyfine.sales(sale_id),
+    menu_item_id INTEGER NOT NULL REFERENCES mightyfine.menu_items(menu_item_id),
+    quantity INTEGER NOT NULL DEFAULT 1,
+    line_total NUMERIC(8,2) NOT NULL
+);
 
 -- ############################################################################
 --
@@ -220,7 +254,7 @@
 -- REQUIREMENTS:
 --   Load data into each table using the COPY command.
 --   The CSV files are located at:
---     /workspaces/MS3083_Template_V2/data/mightyfine/
+--     /workspaces/billybob/data/Mightyfine/
 --
 --   IMPORTANT: Load in this order (parent tables first!):
 --     1. owners
@@ -237,9 +271,14 @@
 --   psql -U jovyan -d postgres -c "ALTER ROLE student WITH SUPERUSER;"
 -- ============================================================================
 
--- YOUR CODE HERE (one COPY statement per table, in order)
-
-
+COPY mightyfine.owners (owner_id, first_name, last_name, email, phone) FROM '/workspaces/billybob/data/Mightyfine/owners (2).csv' WITH (FORMAT csv, HEADER true);
+COPY mightyfine.vendors (vendor_id, vendor_name, contact_name, phone, email, address) FROM '/workspaces/billybob/data/Mightyfine/vendors (2).csv' WITH (FORMAT csv, HEADER true);
+COPY mightyfine.ingredients (ingredient_id, ingredient_name, unit, cost_per_unit, vendor_id) FROM '/workspaces/billybob/data/Mightyfine/ingredients (2).csv' WITH (FORMAT csv, HEADER true);
+COPY mightyfine.inventory (inventory_id, ingredient_id, quantity, reorder_level, last_restocked) FROM '/workspaces/billybob/data/Mightyfine/inventory (2).csv' WITH (FORMAT csv, HEADER true);
+COPY mightyfine.menu_items (menu_item_id, item_name, description, price, is_available) FROM '/workspaces/billybob/data/Mightyfine/menu_items (2).csv' WITH (FORMAT csv, HEADER true);
+COPY mightyfine.menu_item_ingredients (menu_item_ingredient_id, menu_item_id, ingredient_id, quantity_used) FROM '/workspaces/billybob/data/Mightyfine/menu_item_ingredients (2).csv' WITH (FORMAT csv, HEADER true);
+COPY mightyfine.sales (sale_id, sale_date, owner_id, total_amount, payment_type) FROM '/workspaces/billybob/data/Mightyfine/sales (2).csv' WITH (FORMAT csv, HEADER true);
+COPY mightyfine.sale_items (sale_item_id, sale_id, menu_item_id, quantity, line_total) FROM '/workspaces/billybob/data/Mightyfine/sale_items (2).csv' WITH (FORMAT csv, HEADER true);
 
 -- ============================================================================
 -- TASK 2.2: RESET THE SEQUENCES (1 pt)
@@ -251,9 +290,14 @@
 
 -- ============================================================================
 
--- YOUR CODE HERE
-
-
+SELECT setval('mightyfine.owners_owner_id_seq', (SELECT MAX(owner_id) FROM mightyfine.owners));
+SELECT setval('mightyfine.vendors_vendor_id_seq', (SELECT MAX(vendor_id) FROM mightyfine.vendors));
+SELECT setval('mightyfine.ingredients_ingredient_id_seq', (SELECT MAX(ingredient_id) FROM mightyfine.ingredients));
+SELECT setval('mightyfine.inventory_inventory_id_seq', (SELECT MAX(inventory_id) FROM mightyfine.inventory));
+SELECT setval('mightyfine.menu_items_menu_item_id_seq', (SELECT MAX(menu_item_id) FROM mightyfine.menu_items));
+SELECT setval('mightyfine.menu_item_ingredients_menu_item_ingredient_id_seq', (SELECT MAX(menu_item_ingredient_id) FROM mightyfine.menu_item_ingredients));
+SELECT setval('mightyfine.sales_sale_id_seq', (SELECT MAX(sale_id) FROM mightyfine.sales));
+SELECT setval('mightyfine.sale_items_sale_item_id_seq', (SELECT MAX(sale_item_id) FROM mightyfine.sale_items));
 
 -- ============================================================================
 -- TASK 2.3: VERIFY THE DATA (1 pt)
@@ -274,9 +318,21 @@
 --   sale_items              → 62
 -- ============================================================================
 
--- YOUR CODE HERE
-
-
+SELECT 'owners' AS table_name, COUNT(*) AS row_count FROM mightyfine.owners
+UNION ALL
+SELECT 'vendors', COUNT(*) FROM mightyfine.vendors
+UNION ALL
+SELECT 'ingredients', COUNT(*) FROM mightyfine.ingredients
+UNION ALL
+SELECT 'inventory', COUNT(*) FROM mightyfine.inventory
+UNION ALL
+SELECT 'menu_items', COUNT(*) FROM mightyfine.menu_items
+UNION ALL
+SELECT 'menu_item_ingredients', COUNT(*) FROM mightyfine.menu_item_ingredients
+UNION ALL
+SELECT 'sales', COUNT(*) FROM mightyfine.sales
+UNION ALL
+SELECT 'sale_items', COUNT(*) FROM mightyfine.sale_items;
 
 -- ############################################################################
 --
@@ -293,9 +349,8 @@
 --   Order by price from lowest to highest.
 -- ============================================================================
 
--- YOUR CODE HERE
-
-
+SELECT * FROM mightyfine.menu_items
+ORDER BY price ASC;
 
 -- ============================================================================
 -- TASK 3.2: EXPENSIVE ITEMS ONLY (3 pts)
@@ -306,9 +361,9 @@
 --   Order by price descending (most expensive first).
 -- ============================================================================
 
--- YOUR CODE HERE
-
-
+SELECT item_name, price FROM mightyfine.menu_items
+WHERE price > 9.00
+ORDER BY price DESC;
 
 -- ============================================================================
 -- TASK 3.3: CARD SALES (3 pts)
@@ -320,9 +375,10 @@
 --   Show only the top 5 results.
 -- ============================================================================
 
--- YOUR CODE HERE
-
-
+SELECT sale_id, sale_date, total_amount FROM mightyfine.sales
+WHERE payment_type = 'card'
+ORDER BY total_amount DESC
+LIMIT 5;
 
 -- ============================================================================
 -- TASK 3.4: INGREDIENT SEARCH (3 pts)
@@ -333,9 +389,9 @@
 --   Order by cost_per_unit descending.
 -- ============================================================================
 
--- YOUR CODE HERE
-
-
+SELECT ingredient_name, unit, cost_per_unit FROM mightyfine.ingredients
+WHERE vendor_id = 3
+ORDER BY cost_per_unit DESC;
 
 -- ============================================================================
 -- TASK 3.5: COUNT THE SALES PER PAYMENT TYPE (4 pts)
@@ -348,9 +404,9 @@
 -- HINT: You'll need GROUP BY.
 -- ============================================================================
 
--- YOUR CODE HERE
-
-
+SELECT payment_type, COUNT(*) AS num_sales FROM mightyfine.sales
+GROUP BY payment_type
+ORDER BY num_sales DESC;
 
 -- ############################################################################
 --
@@ -383,9 +439,11 @@
 --
 -- ============================================================================
 
--- YOUR CODE HERE
-
-
+SELECT s.sale_id, s.sale_date, CONCAT(o.first_name, ' ', o.last_name) AS owner_name, s.total_amount, s.payment_type
+FROM mightyfine.sales s
+JOIN mightyfine.owners o ON s.owner_id = o.owner_id
+ORDER BY s.sale_id
+LIMIT 10;
 
 -- ============================================================================
 -- TASK 4.2: INNER JOIN — SALE ITEMS + MENU ITEMS (4 pts)
@@ -400,9 +458,11 @@
 --   Show the first 15 rows.
 -- ============================================================================
 
--- YOUR CODE HERE
-
-
+SELECT si.sale_id, mi.item_name, mi.price AS menu_price, si.quantity, si.line_total
+FROM mightyfine.sale_items si
+JOIN mightyfine.menu_items mi ON si.menu_item_id = mi.menu_item_id
+ORDER BY si.sale_id, si.sale_item_id
+LIMIT 15;
 
 -- ============================================================================
 -- TASK 4.3: INNER JOIN — INGREDIENTS + VENDORS (3 pts)
@@ -414,9 +474,10 @@
 --   Order by vendor_name, then ingredient_name.
 -- ============================================================================
 
--- YOUR CODE HERE
-
-
+SELECT i.ingredient_name, i.cost_per_unit, i.unit, v.vendor_name, v.contact_name
+FROM mightyfine.ingredients i
+JOIN mightyfine.vendors v ON i.vendor_id = v.vendor_id
+ORDER BY v.vendor_name, i.ingredient_name;
 
 -- ============================================================================
 -- TASK 4.4: LEFT JOIN — ALL MENU ITEMS + SALES COUNT (5 pts)
@@ -433,9 +494,11 @@
 --   LEFT JOIN keeps ALL menu items even if they have no matching sale_items.
 -- ============================================================================
 
--- YOUR CODE HERE
-
-
+SELECT mi.item_name, COUNT(si.sale_item_id) AS times_sold
+FROM mightyfine.menu_items mi
+LEFT JOIN mightyfine.sale_items si ON mi.menu_item_id = si.menu_item_id
+GROUP BY mi.item_name
+ORDER BY times_sold DESC;
 
 -- ============================================================================
 -- TASK 4.5: MULTI-TABLE JOIN — FULL SALES REPORT (4 pts)
@@ -452,9 +515,13 @@
 --   Show the first 20 rows.
 -- ============================================================================
 
--- YOUR CODE HERE
-
-
+SELECT s.sale_id, s.sale_date, CONCAT(o.first_name, ' ', o.last_name) AS owner_name, mi.item_name, si.quantity, si.line_total, s.payment_type
+FROM mightyfine.sales s
+JOIN mightyfine.owners o ON s.owner_id = o.owner_id
+JOIN mightyfine.sale_items si ON s.sale_id = si.sale_id
+JOIN mightyfine.menu_items mi ON si.menu_item_id = mi.menu_item_id
+ORDER BY s.sale_id, si.sale_item_id
+LIMIT 20;
 
 -- ############################################################################
 --
@@ -474,9 +541,11 @@
 --   Order by item_name, then ingredient_name.
 -- ============================================================================
 
--- YOUR CODE HERE
-
-
+SELECT mi.item_name, i.ingredient_name, bridge.quantity_used, i.unit
+FROM mightyfine.menu_item_ingredients bridge
+JOIN mightyfine.menu_items mi ON bridge.menu_item_id = mi.menu_item_id
+JOIN mightyfine.ingredients i ON bridge.ingredient_id = i.ingredient_id
+ORDER BY mi.item_name, i.ingredient_name;
 
 -- ============================================================================
 -- TASK 5.2: WHAT'S IN THE DOUBLE MIGHTY BURGER? (3 pts)
@@ -488,9 +557,12 @@
 --   Use the same three-table join as 5.1, but add a WHERE clause.
 -- ============================================================================
 
--- YOUR CODE HERE
-
-
+SELECT i.ingredient_name, bridge.quantity_used, i.unit
+FROM mightyfine.menu_item_ingredients bridge
+JOIN mightyfine.menu_items mi ON bridge.menu_item_id = mi.menu_item_id
+JOIN mightyfine.ingredients i ON bridge.ingredient_id = i.ingredient_id
+WHERE mi.item_name = 'Double Mighty Burger'
+ORDER BY i.ingredient_name;
 
 -- ============================================================================
 -- TASK 5.3: WHICH ITEMS USE BACON? (3 pts)
@@ -503,9 +575,12 @@
 --   Order by item_name.
 -- ============================================================================
 
--- YOUR CODE HERE
-
-
+SELECT mi.item_name, mi.price
+FROM mightyfine.menu_item_ingredients bridge
+JOIN mightyfine.menu_items mi ON bridge.menu_item_id = mi.menu_item_id
+JOIN mightyfine.ingredients i ON bridge.ingredient_id = i.ingredient_id
+WHERE i.ingredient_name = 'Bacon Strip'
+ORDER BY mi.item_name;
 
 -- ============================================================================
 -- TASK 5.4: INGREDIENT POPULARITY (3 pts)
@@ -519,9 +594,11 @@
 --   Order by used_in_how_many_items descending.
 -- ============================================================================
 
--- YOUR CODE HERE
-
-
+SELECT i.ingredient_name, COUNT(bridge.menu_item_id) AS used_in_how_many_items
+FROM mightyfine.menu_item_ingredients bridge
+JOIN mightyfine.ingredients i ON bridge.ingredient_id = i.ingredient_id
+GROUP BY i.ingredient_name
+ORDER BY used_in_how_many_items DESC;
 
 -- ============================================================================
 -- TASK 5.5: INGREDIENT COUNT PER MENU ITEM (3 pts)
@@ -534,9 +611,11 @@
 --   Order by number_of_ingredients descending.
 -- ============================================================================
 
--- YOUR CODE HERE
-
-
+SELECT mi.item_name, COUNT(bridge.ingredient_id) AS number_of_ingredients
+FROM mightyfine.menu_item_ingredients bridge
+JOIN mightyfine.menu_items mi ON bridge.menu_item_id = mi.menu_item_id
+GROUP BY mi.item_name
+ORDER BY number_of_ingredients DESC;
 
 -- ############################################################################
 --
@@ -560,9 +639,12 @@
 --       ...
 -- ============================================================================
 
--- YOUR CODE HERE
-
-
+SELECT
+    (SELECT SUM(total_amount) FROM mightyfine.sales) AS total_revenue,
+    ROUND((SELECT AVG(total_amount) FROM mightyfine.sales), 2) AS avg_sale,
+    (SELECT COUNT(*) FROM mightyfine.sales) AS total_sales,
+    (SELECT MIN(price) FROM mightyfine.menu_items) AS cheapest_item,
+    (SELECT MAX(price) FROM mightyfine.menu_items) AS priciest_item;
 
 -- ============================================================================
 -- TASK 6.2: REVENUE PER OWNER (4 pts)
@@ -575,9 +657,13 @@
 --   Order by total_revenue descending.
 -- ============================================================================
 
--- YOUR CODE HERE
-
-
+SELECT CONCAT(o.first_name, ' ', o.last_name) AS owner_name,
+COUNT(s.sale_id) AS number_of_sales,
+COALESCE(SUM(s.total_amount), 0) AS total_revenue
+FROM mightyfine.owners o
+LEFT JOIN mightyfine.sales s ON o.owner_id = s.owner_id
+GROUP BY owner_name
+ORDER BY total_revenue DESC;
 
 -- ============================================================================
 -- TASK 6.3: BEST-SELLING ITEMS BY QUANTITY (3 pts)
@@ -591,9 +677,13 @@
 --   Order by total_qty_sold descending.
 -- ============================================================================
 
--- YOUR CODE HERE
-
-
+SELECT mi.item_name,
+SUM(si.quantity) AS total_qty_sold,
+SUM(si.line_total) AS total_revenue
+FROM mightyfine.sale_items si
+JOIN mightyfine.menu_items mi ON si.menu_item_id = mi.menu_item_id
+GROUP BY mi.item_name
+ORDER BY total_qty_sold DESC;
 
 -- ============================================================================
 -- TASK 6.4: INVENTORY VALUE (3 pts)
@@ -609,9 +699,11 @@
 --   total_ingredients (COUNT) and total_inventory_value (SUM, rounded to 2).
 -- ============================================================================
 
--- YOUR CODE HERE
-
-
+SELECT i.ingredient_name, inv.quantity AS qty_on_hand, i.unit, i.cost_per_unit,
+ROUND(inv.quantity * i.cost_per_unit, 2) AS inventory_value
+FROM mightyfine.inventory inv
+JOIN mightyfine.ingredients i ON inv.ingredient_id = i.ingredient_id
+ORDER BY inventory_value DESC;
 
 -- ============================================================================
 -- TASK 6.5: PROFIT PER MENU ITEM (4 pts)
@@ -635,9 +727,15 @@
 -- and math all in one query. Refer to the hotdog lesson Report 4.
 -- ============================================================================
 
--- YOUR CODE HERE
-
-
+SELECT mi.item_name, mi.price AS selling_price,
+ROUND(SUM(bridge.quantity_used * i.cost_per_unit), 2) AS total_ingredient_cost,
+ROUND(mi.price - SUM(bridge.quantity_used * i.cost_per_unit), 2) AS profit,
+ROUND(((mi.price - SUM(bridge.quantity_used * i.cost_per_unit)) / mi.price) * 100, 1) AS profit_margin_pct
+FROM mightyfine.menu_item_ingredients bridge
+JOIN mightyfine.menu_items mi ON bridge.menu_item_id = mi.menu_item_id
+JOIN mightyfine.ingredients i ON bridge.ingredient_id = i.ingredient_id
+GROUP BY mi.item_name, mi.price
+ORDER BY profit_margin_pct DESC;
 
 -- ============================================================================
 -- TASK 6.6: BUILD A RECEIPT WITH 8.25% TAX (3 pts)
@@ -654,9 +752,17 @@
 -- HINT: Look at the Sales Ticket example in the hotdog lesson (Report 1).
 -- ============================================================================
 
--- YOUR CODE HERE
-
-
+WITH receipt AS (
+    SELECT mi.item_name, mi.price, si.quantity, (mi.price * si.quantity) AS line_total
+    FROM mightyfine.sale_items si
+    JOIN mightyfine.menu_items mi ON si.menu_item_id = mi.menu_item_id
+    WHERE mi.item_name IN ('Double Mighty Burger', 'Mighty Fine Fries', 'Chocolate Shake')
+)
+SELECT
+    ROUND(SUM(line_total), 2) AS subtotal,
+    ROUND(SUM(line_total) * 0.0825, 2) AS tax_8_25,
+    ROUND(SUM(line_total) * 1.0825, 2) AS grand_total
+FROM receipt;
 
 -- ============================================================================
 -- END OF HOMEWORK
