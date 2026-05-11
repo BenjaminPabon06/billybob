@@ -1,0 +1,6 @@
+salesperson_id,first_name,last_name,email,phone_number,job_title,is_active
+1,Carlos,Miranda,c.miranda@dealership.com,210-888-1290,Sales Associate,Yes
+2,Abigail,Stanley,a.stan304@dealership.com,210-888-1291 ,Sales Associate,Yes
+3,Jacob,Doss,j.doss@dealership.com,210-888-1292,Sales Associate,Yes
+4,Aaron,Carson,a.carsons@dealership.com,210-888-1293,Sales Associate,Yes
+5,Jim,Miller,j.miller2@dealership.com,210-888-1294,Sales Associate,Yes

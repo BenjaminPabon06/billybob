@@ -1,0 +1,43 @@
+model_id,make_id,model_name
+1,15,Rouge
+2,15,Pathfinder
+3,15,Murano
+4,11,Tuscon
+5,3,Encore
+6,14,Outlander Sport
+7,14,Outlander
+8,19,Atlas
+9,19,Tiguan
+10,19,Taos
+11,17,Crosstek
+12,17,Outback
+13,5,Pacifica
+14,13,Carnival
+15,10,Odyssey
+16,5,Voyager
+17,6,Grand Caravan
+18,18,Corolla
+19,15,Sentra
+20,11,Elantra
+21,15,Versa
+22,17,Brz
+23,18,Camry
+24,10,Accord
+25,17,WRX
+26,1,Integra
+27,2,A4
+28,2,A6
+29,2,S5
+30,4,Camaro
+31,7,124 Spider
+32,8,Mustang
+33,9,Sierra 1500
+34,15,Titan
+35,4,Silverado
+36,15,Frontier
+37,10,Ridgeline
+38,11,Santa Cruz
+39,16,1500
+40,8,Maverick
+41,12,Gladiator
+42,18,Tacoma

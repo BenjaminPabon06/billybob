@@ -1,0 +1,4 @@
+fuel_type_id,fuel_type_name,tank_capacity
+1,Gas,14.5
+2,Flexible,20
+3,Hybrid,13

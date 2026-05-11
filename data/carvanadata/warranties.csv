@@ -1,0 +1,16 @@
+warranty_id,sales_id,warranty_type,coverage_description,duration,mileage_limit,cost,acquisition_method,start_date,end_date
+1,1,Basic Powertrain,"Engine, transmission, drivetrain",36,"36,000",0,included,2025-01-08,2028-01-08
+2,2,Bumper-to-Bumper,Full coverage excluding wear items,48,"50,000","1,295",purchased,2025-01-15,2029-01-15
+3,3,Comprehensive,Powertrain + electrical + A/C + tech,60,"60,000","1,895",purchased,2025-01-21,2030-01-21
+4,4,Basic Powertrain,"Engine, transmission, drivetrain",36,"36,000",0,included,2025-02-03,2028-02-03
+5,5,Basic Powertrain,"Engine, transmission, drivetrain",36,"36,000",0,included,2025-02-10,2028-02-10
+6,6,Bumper-to-Bumper,Full coverage excluding wear items,48,"50,000","1,295",purchased,2025-02-17,2029-02-17
+7,7,Comprehensive,Powertrain + electrical + A/C + tech,60,"60,000","1,895",purchased,2025-02-25,2030-02-25
+8,8,Extended Powertrain,"Engine, transmission, transfer case, axles",48,"50,000","1,195",purchased,2025-03-04,2029-03-04
+9,9,Bumper-to-Bumper,Full coverage excluding wear items,48,"50,000","1,195",purchased,2025-03-11,2029-03-11
+10,10,Comprehensive,Powertrain + electrical + A/C + tech,60,"60,000","1,895",purchased,2025-03-18,2030-03-18
+11,11,Basic Powertrain,"Engine, transmission, drivetrain",36,36000,0,included,2025-03-25,2028-03-25
+12,12,Extended Powertrain,"Engine, transmission, transfer case, axles",48,"50,000","1,295",purchased,2025-04-01,2029-04-01
+13,13,Comprehensive,Powertrain + electrical + A/C + tech,60,"60,000","1,795",purchased,2025-04-07,2030-04-07
+14,14,Bumper-to-Bumper,Full coverage excluding wear items,48,"50,000","1,295",purchased,2025-04-14,2029-04-14
+15,15,Basic Powertrain,"Engine, transmission, drivetrain",36,"36,000",0,included,2025-04-21,2028-04-21

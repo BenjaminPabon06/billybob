@@ -1,0 +1,26 @@
+customer_id,first_name,last_name,email,phone_number,street_address,city,state,zip,date_of_birth,created_at
+1,James,Rodriguez,j.rod@gmail.com,210-777-4454,2821 Blanco Rd,San Antonio,TX,78212,1985-03-14,2025-01-08
+2,Kim,Nguyen,k.nguyen15@yahoo.com,210-555-4121,9873 Sosa Manor,San Antonio,TX,78249,1990-07-22,2025-01-15
+3,David,Finley,d.finley@proton.me,210-669-6969,777 Mulberry Rd,San Antonio,TX,78252,1988-11-05,2025-01-21
+4,Keith,Cotton,cottondr@outlook.com,210-444-4843,9898 Station Rd,San Antonio,TX,78245,1995-02-18,2025-02-03
+5,Andrea,Salgado,as22456@hotmail.com,210-939-9939,4812 Joy Rd,San Antonio,TX,78228,1982-09-30,2025-02-10
+6,Peter,Orona,tomato2454@gmail.com,210-898-0041,778 Stanley Dr,San Antonio,TX,78232,1993-05-12,2025-02-17
+7,Lakesha,Matthews,matthews778@gmail.com,210-376-6541,892 Retama Rd,San Antonio,TX,78221,1979-12-01,2025-02-25
+8,Steven,Stephens,s.stephens20@gmail.com,210-333-4544,2665 Highland Prk,San Antonio,TX,78222,1997-04-08,2025-03-04
+9,Joe,Martinez,jmartinez2022@yahoo.com,210-886-0321,7822 Inglewood Place,San Antonio,TX,78201,1986-08-27,2025-03-11
+10,Bruce,Doe,bruceymoney07@outlook.com,210-499-4929,8235 Destiny Dr,San Antonio,TX,78207,1991-01-19,2025-03-18
+11,Adrian,Luna,a.luna45@email.com,210-887-9942,13112 Monument Parke,San Antonio,TX,78218,1984-06-03,2025-03-25
+12,Parker,Anderson,parkerands233@email.com,210-893-4321,4417 Highland Park,San Antonio,TX,78229,1999-10-16,2025-04-01
+13,Parmida,Stanley,p.stanley221@gmail.com,210-067-6981,3122 Highland Dawn,San Antonio,TX,78209,1987-03-29,2025-04-07
+14,Ethan,Shamdas,shamdaseats@outlook.com,210-674-2110,4412 Stacey Island,San Antonio,TX,78247,1994-07-11,2025-04-14
+15,Arnold,Allen,a.allen227898@gmail.com,210-785-3352,7712 Aston Prk,San Antonio,TX,78232,1980-02-23,2025-04-21
+16,Brendan,Dominguez,dominguez2212@gmail.com,210-253-8766,7716 Asten Mnr,San Antonio,TX,78201,1996-11-07,2025-04-28
+17,Terrin,Peterson,t.peterson@yahoo.com,830-555-0115,2875 Thousand Oaks Dr,San Antonio,TX,78245,1983-05-15,2025-05-05
+18,David,Filoni,filonirocks@gmail.com,210-491-0114,550 W Cesar Chavez Blvd,San Antonio,TX,78227,1992-08-04,2025-05-12
+19,Dana,Cruz,dana.c223@email.com,210-213-2245,3710 Stahl Rd,San Antonio,TX,78028,1989-12-20,2025-05-19
+20,Olivia,Ramos,ramos0liv@yahoo.com,210-608-4664,1188 Austin Hwy,San Antonio,TX,78246,1998-04-02,2025-05-26
+21,Amanda,Celeste,a.celeste0212@gmail.com,210-254-6753,7650 Callaghan Rd,San Antonio,TX,78232,1975-09-18,2025-06-02
+22,Ivy,Diaz,ivydiaz@gmail.com,210-987-0118,425 Mulberry Ave,San Antonio,TX,78250,1990-01-30,2025-06-09
+23,Trent,Roberts,troberts1985@gmail.com,210-456-9001,2960 Harry Wurzbach Rd,San Antonio,TX,78251,1985-06-14,2025-06-16
+24,Ray,Espinoza,r.espinoza1993@yahoo.com,210-312-2335,800 Zarzamora St,San Antonio,TX,78254,1993-03-09,2025-06-23
+25,Madison,Bermea,madisonberm21@gmail.com,210-546-8735,9241 Eastern Rd,San Antonio,TX,78246,1977-11-25,2025-06-30
